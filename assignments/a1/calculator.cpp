@@ -12,6 +12,8 @@
 
 //TODO Delete Typinfo after debugging
 #include <typeinfo>
+//void print_stack(std::stack<std::string> c);
+
 
 int main(int argc, char* argv[]) {
 
@@ -186,9 +188,35 @@ int main(int argc, char* argv[]) {
       }
     }
 
+    //Pop
     else if (s == "pop") {
       calc.pop();
+    }
+
+    //Reverse stack
+    else if (s == "reverse") {
+      //std::cout << calc << '\n';
+      //print_stack(calc);
+
+      std::stack <std::string> tmpcalc;
+
+      while (!calc.empty()) {
+        tmpcalc.push(calc.top());
+        calc.pop();
+      }
+      calc = tmpcalc;
+
+      //print_stack(calc);
+      //::cout << calc << '\n';
     }
 	}
 	in.close();
 }
+
+// void print_stack(std::stack<std::string> c) {
+//     while (!c.empty()) {
+//         std::cout<<c.top()<<" ";
+//         c.pop();
+//     }
+//     std::cout << "\nreversed" << '\n';
+// }
