@@ -185,6 +185,10 @@ int main(int argc, char* argv[]) {
         calc.push(std::to_string(ans));
       }
     }
+
+    else if (s == "pop") {
+      calc.pop();
+    }
 	}
 	in.close();
 }
