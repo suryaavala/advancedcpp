@@ -1,31 +1,6 @@
 1
-1 repeat
-2 add
-2 repeat
-3 mult
-3 repeat
-4 sub
-4 repeat
-10 sub
-5 div
-endrepeat
-endrepeat
-endrepeat
-sqrt
-endrepeat
-
-1.0
-1 repeat
-2 add
-2 repeat
-3 mult
-3 repeat
-4 sub
-4 repeat
-10 sub
-5 div
-endrepeat
-endrepeat
-endrepeat
-sqrt
-endrepeat
+2.0 add
+3.0 mult
+4.0 div
+5.0 sub
+6.0 sqrt
