@@ -40,18 +40,125 @@ int main(int argc, char* argv[]) {
 	while (in >> s) {
 
     //TODO Delete cout
-    std::cout << s << isdigit(s[0])<<  '\n';
+  //  std::cout << s << isdigit(s[0])<<  '\n';
 
     if (isdigit(s[0])) {
+      // if (s.find('.') != std::string::npos) {
+      //   double n = std::stod(s);
+      //   calc.push(n);
+      // }
+      // else {
+      //   int n = std::stoi(s);
+      //   calc.push(n);
+      // }
       calc.push(s);
     }
-    else {
+    else if (s == "add" || s == "sub" || s == "mult" || s == "div") {
       std::string a, b;
       a = calc.top();
       calc.pop();
       b = calc.top();
       calc.pop();
       std::cout << a << " " << b << " " << s << '\n';
+
+      // //Convertings to int or doubles
+      // if (a.find('.') != std::string::npos || b.find('.') != std::string::npos) {
+      //   int n1 = std::stod(a);
+      //   int n2 = std::stod(b);
+      // }
+      // else {
+      //   int n1 = std::stoi(a);
+      //   int n2 = std::stoi(b);
+      // }
+      //std::cout << typeid(a).name() <<" "<< typeid(b).name()<< '\n';
+
+      //Caclulation
+      if (s == "add") {
+        if (a.find('.') != std::string::npos || b.find('.') != std::string::npos) {
+            double n1 = std::stod(a);
+            double n2 = std::stod(b);
+            double ans = n1 + n2;
+
+            std::cout << n1 << " + " << n2 << " = " << ans << '\n';
+
+            calc.push(std::to_string(ans));
+        }
+        else if (s == "add" ) {
+          int n1 = std::stod(a);
+          int n2 = std::stod(b);
+          int ans = n1 + n2;
+
+          std::cout << n1 << " + " << n2 << " = " << ans << '\n';
+
+          calc.push(std::to_string(ans));
+        }
+      }
+
+      else if (s == "sub") {
+        if (a.find('.') != std::string::npos || b.find('.') != std::string::npos) {
+            double n1 = std::stod(a);
+            double n2 = std::stod(b);
+            double ans = n1 - n2;
+
+            std::cout << n1 << " - " << n2 << " = " << ans << '\n';
+
+            calc.push(std::to_string(ans));
+        }
+        else {
+          int n1 = std::stod(a);
+          int n2 = std::stod(b);
+          int ans = n1 - n2;
+
+          std::cout << n1 << " - " << n2 << " = " << ans << '\n';
+
+          calc.push(std::to_string(ans));
+        }
+      }
+
+      else if (s == "mult") {
+        if (a.find('.') != std::string::npos || b.find('.') != std::string::npos) {
+            double n1 = std::stod(a);
+            double n2 = std::stod(b);
+            double ans = n1 * n2;
+
+            std::cout << n1 << " * " << n2 << " = " << ans << '\n';
+
+            calc.push(std::to_string(ans));
+        }
+        else {
+          int n1 = std::stod(a);
+          int n2 = std::stod(b);
+          int ans = n1 * n2;
+
+          std::cout << n1 << " * " << n2 << " = " << ans << '\n';
+
+          calc.push(std::to_string(ans));
+        }
+      }
+
+      else if (s == "div") {
+        if (a.find('.') != std::string::npos || b.find('.') != std::string::npos) {
+            double n1 = std::stod(a);
+            double n2 = std::stod(b);
+            double ans = n1 / n2;
+
+            std::cout << n1 << " / " << n2 << " = " << ans << '\n';
+
+            calc.push(std::to_string(ans));
+        }
+        else {
+          int n1 = std::stod(a);
+          int n2 = std::stod(b);
+          int ans = n1 / n2;
+
+          std::cout << n1 << " / " << n2 << " = " << ans << '\n';
+
+          calc.push(std::to_string(ans));
+        }
+      }
+
+
+
     }
 	}
 	in.close();
