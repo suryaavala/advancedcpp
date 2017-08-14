@@ -1,0 +1,25 @@
+-1 -2 add
+-3 -4 sub
+5 -6 mult
+8 -16 div
+-32 -64 div
+256 sqrt
+256.0 sqrt
+.64 sqrt
+-.1 -10 mult
+-0.5
+4 repeat
+-0.5 mult
+endrepeat
+-2
+2 repeat
+-2 add
+3 repeat
+2 sub
+4 repeat
+-2 mult
+endrepeat
+-1.0 div
+endrepeat
+4 sqrt
+endrepeat

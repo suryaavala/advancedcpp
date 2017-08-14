@@ -1,0 +1,7 @@
+0
+2 repeat
+3 repeat
+1 add
+endrepeat
+2 mult
+endrepeat
