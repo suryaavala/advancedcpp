@@ -160,6 +160,31 @@ int main(int argc, char* argv[]) {
 
 
     }
+
+    else if (s == "sqrt") {
+      std::string a;
+      a = calc.top();
+      calc.pop();
+      std::cout << a << " " << s << '\n';
+
+      if (a.find('.') != std::string::npos) {
+
+        double n1 = std::stod(a);
+        double ans = sqrt(n1);
+        std::cout << "sqrt " << n1 << " = " << ans << '\n';
+
+        calc.push(std::to_string(ans));
+      }
+
+      else {
+
+        int n1 = std::stoi(a);
+        int ans = sqrt(n1);
+        std::cout << "sqrt " << n1 << " = " << ans << '\n';
+
+        calc.push(std::to_string(ans));
+      }
+    }
 	}
 	in.close();
 }
