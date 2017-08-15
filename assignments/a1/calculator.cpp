@@ -72,6 +72,13 @@ int main(int argc, char* argv[]) {
       //   int n = std::stoi(s);
       //   calc.push(n);
       // }
+      //IF s is a double then push it as string with proper precision
+      if (s.find('.') != std::string::npos) {
+        double n = std::stod(s);
+        std::stringstream s_stream;
+        s_stream << std::fixed << std::setprecision(3) << n;
+        s = s_stream.str();
+      }
       calc.push(s);
     }
     else if (s != "repeat" && s != "endrepeat" && !rep_mode){
@@ -115,6 +122,7 @@ void print_queue(std::queue<std::string> q) {
 }
 
 std::stack <std::string> calculate (std::stack <std::string> current_stack, std::string operation) {
+
   if (operation == "add" || operation == "sub" || operation == "mult" || operation == "div") {
     std::string a, b;
     a = current_stack.top();
@@ -132,7 +140,7 @@ std::stack <std::string> calculate (std::stack <std::string> current_stack, std:
           double n2 = std::stod(b);
           double ans = n1 + n2;
 
-          std::cout << n1 << " + " << n2 << " = " << ans << '\n';
+          std::cout << a << " + " << b << " = " << ans << '\n';
 
           //Double to string with precision(3) then push to stack
           std::stringstream ans_stream;
@@ -145,7 +153,7 @@ std::stack <std::string> calculate (std::stack <std::string> current_stack, std:
         int n2 = std::stoi(b);
         int ans = n1 + n2;
 
-        std::cout << n1 << " + " << n2 << " = " << ans << '\n';
+        std::cout << a << " + " << b << " = " << ans << '\n';
 
         current_stack.push(std::to_string(ans));
       }
@@ -157,7 +165,7 @@ std::stack <std::string> calculate (std::stack <std::string> current_stack, std:
           double n2 = std::stod(b);
           double ans = n1 - n2;
 
-          std::cout << n1 << " - " << n2 << " = " << ans << '\n';
+          std::cout << a << " - " << b << " = " << ans << '\n';
 
 
           //Double to string with precision(3) then push to stack
@@ -171,7 +179,7 @@ std::stack <std::string> calculate (std::stack <std::string> current_stack, std:
         int n2 = std::stoi(b);
         int ans = n1 - n2;
 
-        std::cout << n1 << " - " << n2 << " = " << ans << '\n';
+        std::cout << a << " - " << b << " = " << ans << '\n';
 
         current_stack.push(std::to_string(ans));
       }
@@ -183,7 +191,7 @@ std::stack <std::string> calculate (std::stack <std::string> current_stack, std:
           double n2 = std::stod(b);
           double ans = n1 * n2;
 
-          std::cout << n1 << " * " << n2 << " = " << ans << '\n';
+          std::cout << a << " * " << b << " = " << ans << '\n';
 
           //Double to string with precision(3) then push to stack
           std::stringstream ans_stream;
@@ -197,7 +205,7 @@ std::stack <std::string> calculate (std::stack <std::string> current_stack, std:
         int n2 = std::stoi(b);
         int ans = n1 * n2;
 
-        std::cout << n1 << " * " << n2 << " = " << ans << '\n';
+        std::cout << a << " * " << b << " = " << ans << '\n';
 
         current_stack.push(std::to_string(ans));
       }
@@ -209,7 +217,7 @@ std::stack <std::string> calculate (std::stack <std::string> current_stack, std:
           double n2 = std::stod(b);
           double ans = n1 / n2;
 
-          std::cout << n1 << " / " << n2 << " = " << ans << '\n';
+          std::cout << a << " / " << b << " = " << ans << '\n';
 
           //Double to string with precision(3) then push to stack
           std::stringstream ans_stream;
@@ -223,7 +231,7 @@ std::stack <std::string> calculate (std::stack <std::string> current_stack, std:
         int n2 = std::stoi(b);
         int ans = n1 / n2;
 
-        std::cout << n1 << " / " << n2 << " = " << ans << '\n';
+        std::cout << a << " / " << b << " = " << ans << '\n';
 
         current_stack.push(std::to_string(ans));
       }
@@ -244,7 +252,7 @@ std::stack <std::string> calculate (std::stack <std::string> current_stack, std:
 
       double n1 = std::stod(a);
       double ans = sqrt(n1);
-      std::cout << "sqrt " << n1 << " = " << ans << '\n';
+      std::cout << "sqrt " << a << " = " << ans << '\n';
 
       //Double to string with precision(3) then push to stack
       std::stringstream ans_stream;
@@ -258,7 +266,7 @@ std::stack <std::string> calculate (std::stack <std::string> current_stack, std:
 
       int n1 = std::stoi(a);
       int ans = sqrt(n1);
-      std::cout << "sqrt " << n1 << " = " << ans << '\n';
+      std::cout << "sqrt " << a << " = " << ans << '\n';
 
       current_stack.push(std::to_string(ans));
     }
