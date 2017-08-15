@@ -22,7 +22,9 @@ void print_stack(std::stack<std::string> c);
 void print_queue(std::queue<std::string> c);
 bool DEBUG = 0;
 
+//Functions for calculations and repeat
 std::stack <std::string> calculate (std::stack <std::string> current_stack, std::string operation);
+std::stack <std::string> enrepeat (std::stack <std::string> current_stack, std::queue <std::string> rep_stack);
 
 
 
@@ -42,6 +44,10 @@ int main(int argc, char* argv[]) {
   //  Claculator stack
   std::stack <std::string> calc;
 
+  //Repeat queue and repeat mode
+  std::queue <std::string> rep;
+  bool rep_mode = 0;
+
 
   //TODO Stack functions
   // empty() – Returns whether the stack is empty
@@ -57,7 +63,7 @@ int main(int argc, char* argv[]) {
                                         {//TODO Delete cout
                                         std::cout << s << " = s here "<<  '\n';}
 
-    if (isdigit(s[0])) {
+    if (isdigit(s[0]) && !rep_mode) {
       // if (s.find('.') != std::string::npos) {
       //   double n = std::stod(s);
       //   calc.push(n);
@@ -68,8 +74,25 @@ int main(int argc, char* argv[]) {
       // }
       calc.push(s);
     }
-    else if (s != "repeat" && s != "endrepeat"){
+    else if (s != "repeat" && s != "endrepeat" && !rep_mode){
       calc = calculate(calc, s);
+    }
+    else if (s == "repeat" || (rep_mode && s != "endrepeat")) {
+      rep_mode = 1;
+
+      //Capturing the commands into rep stack other the "repeat" command itself
+      if (s != "repeat") {
+        rep.push(s);
+      }
+    }
+    else if (s == "endrepeat") {
+                                              if(DEBUG)
+                                              {std::cout << "end repeat" << '\n';}
+      calc = enrepeat(calc, rep);
+
+      //cleaning stack rep and rep_mode
+      rep = std::queue <std::string>();
+      rep_mode = 0;
     }
 	}
 	in.close();
@@ -98,7 +121,9 @@ std::stack <std::string> calculate (std::stack <std::string> current_stack, std:
     current_stack.pop();
     b = current_stack.top();
     current_stack.pop();
-    std::cout << a << " " << b << " " << operation << '\n';
+
+                                    if(DEBUG)
+                                    {std::cout << a << " " << b << " " << operation << '\n';}
 
     // //Convertings to int or doubles
     // if (a.find('.') != std::string::npos || b.find('.') != std::string::npos) {
@@ -204,7 +229,8 @@ std::stack <std::string> calculate (std::stack <std::string> current_stack, std:
     std::string a;
     a = current_stack.top();
     current_stack.pop();
-    std::cout << a << " " << operation << '\n';
+                                                if(DEBUG)
+                                                {std::cout << a << " " << operation << '\n';}
 
     if (a.find('.') != std::string::npos) {
 
@@ -262,5 +288,63 @@ std::stack <std::string> calculate (std::stack <std::string> current_stack, std:
                                       std::cout << "/* message */" << '\n';}
   }
 
+  return current_stack;
+}
+
+std::stack <std::string> enrepeat (std::stack <std::string> current_stack, std::queue <std::string> rep_stack){
+
+                                  if(DEBUG)
+                                  {std::cout << "/* Printing rep queue */" << '\n';
+                                  print_queue(rep_stack);
+                                  std::cout << "/* message */" << '\n';}
+  int nb_repeats = std::stoi(current_stack.top());
+  current_stack.pop();
+
+  while (nb_repeats) {
+    std::queue <std::string> temp_rep_stack = rep_stack;
+
+    //Rep stack for nested repeats
+    std::queue <std::string> nested_rep;
+    bool nested_rep_mode = 0;
+    while (!temp_rep_stack.empty()) {
+
+      std::string s = temp_rep_stack.front();
+                                          if(DEBUG)
+                                          {//TODO Delete cout
+                                          std::cout << s << " = s here "<<  '\n';}
+
+      if (isdigit(s[0]) && !nested_rep_mode) {
+        // if (s.find('.') != std::string::npos) {
+        //   double n = std::stod(s);
+        //   calc.push(n);
+        // }
+        // else {
+        //   int n = std::stoi(s);
+        //   calc.push(n);
+        // }
+        current_stack.push(s);
+      }
+      else if (s != "repeat" && s != "endrepeat" && !nested_rep_mode){
+        current_stack = calculate(current_stack, s);
+      }
+      else if (s == "repeat" || (nested_rep_mode && s != "endrepeat")) {
+        nested_rep_mode = 1;
+        nested_rep.push(s);
+
+      }
+      else if (s == "endrepeat") {
+        current_stack = enrepeat(current_stack, nested_rep);
+
+        //Cleaning nested_rep and nested_rep_mode
+        nested_rep = std::queue <std::string>();
+        nested_rep_mode = 0;
+      }
+
+      temp_rep_stack.pop();
+    }
+
+    //reducing the number of repeats
+    nb_repeats -= 1;
+  }
   return current_stack;
 }
