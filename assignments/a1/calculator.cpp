@@ -9,10 +9,14 @@
 //include cmath for sqrt
 #include <cmath>
 
+//include string stream for double to string precision
+#include <sstream>
+
 
 //TODO Delete Typinfo after debugging
 #include <typeinfo>
 //void print_stack(std::stack<std::string> c);
+std::stack <std::string> calculate (std::stack <std::string> current_stack, std::string operation);
 
 
 int main(int argc, char* argv[]) {
@@ -30,6 +34,8 @@ int main(int argc, char* argv[]) {
 
   //  Claculator stack
   std::stack <std::string> calc;
+
+  
   //TODO Stack functions
   // empty() – Returns whether the stack is empty
   // size() – Returns the size of the stack
@@ -55,159 +61,8 @@ int main(int argc, char* argv[]) {
       // }
       calc.push(s);
     }
-    else if (s == "add" || s == "sub" || s == "mult" || s == "div") {
-      std::string a, b;
-      a = calc.top();
-      calc.pop();
-      b = calc.top();
-      calc.pop();
-      std::cout << a << " " << b << " " << s << '\n';
-
-      // //Convertings to int or doubles
-      // if (a.find('.') != std::string::npos || b.find('.') != std::string::npos) {
-      //   int n1 = std::stod(a);
-      //   int n2 = std::stod(b);
-      // }
-      // else {
-      //   int n1 = std::stoi(a);
-      //   int n2 = std::stoi(b);
-      // }
-      //std::cout << typeid(a).name() <<" "<< typeid(b).name()<< '\n';
-
-      //Caclulation
-      if (s == "add") {
-        if (a.find('.') != std::string::npos || b.find('.') != std::string::npos) {
-            double n1 = std::stod(a);
-            double n2 = std::stod(b);
-            double ans = n1 + n2;
-
-            std::cout << n1 << " + " << n2 << " = " << ans << '\n';
-
-            calc.push(std::to_string(ans));
-        }
-        else if (s == "add" ) {
-          int n1 = std::stod(a);
-          int n2 = std::stod(b);
-          int ans = n1 + n2;
-
-          std::cout << n1 << " + " << n2 << " = " << ans << '\n';
-
-          calc.push(std::to_string(ans));
-        }
-      }
-
-      else if (s == "sub") {
-        if (a.find('.') != std::string::npos || b.find('.') != std::string::npos) {
-            double n1 = std::stod(a);
-            double n2 = std::stod(b);
-            double ans = n1 - n2;
-
-            std::cout << n1 << " - " << n2 << " = " << ans << '\n';
-
-            calc.push(std::to_string(ans));
-        }
-        else {
-          int n1 = std::stod(a);
-          int n2 = std::stod(b);
-          int ans = n1 - n2;
-
-          std::cout << n1 << " - " << n2 << " = " << ans << '\n';
-
-          calc.push(std::to_string(ans));
-        }
-      }
-
-      else if (s == "mult") {
-        if (a.find('.') != std::string::npos || b.find('.') != std::string::npos) {
-            double n1 = std::stod(a);
-            double n2 = std::stod(b);
-            double ans = n1 * n2;
-
-            std::cout << n1 << " * " << n2 << " = " << ans << '\n';
-
-            calc.push(std::to_string(ans));
-        }
-        else {
-          int n1 = std::stod(a);
-          int n2 = std::stod(b);
-          int ans = n1 * n2;
-
-          std::cout << n1 << " * " << n2 << " = " << ans << '\n';
-
-          calc.push(std::to_string(ans));
-        }
-      }
-
-      else if (s == "div") {
-        if (a.find('.') != std::string::npos || b.find('.') != std::string::npos) {
-            double n1 = std::stod(a);
-            double n2 = std::stod(b);
-            double ans = n1 / n2;
-
-            std::cout << n1 << " / " << n2 << " = " << ans << '\n';
-
-            calc.push(std::to_string(ans));
-        }
-        else {
-          int n1 = std::stod(a);
-          int n2 = std::stod(b);
-          int ans = n1 / n2;
-
-          std::cout << n1 << " / " << n2 << " = " << ans << '\n';
-
-          calc.push(std::to_string(ans));
-        }
-      }
-
-
-
-    }
-
-    else if (s == "sqrt") {
-      std::string a;
-      a = calc.top();
-      calc.pop();
-      std::cout << a << " " << s << '\n';
-
-      if (a.find('.') != std::string::npos) {
-
-        double n1 = std::stod(a);
-        double ans = sqrt(n1);
-        std::cout << "sqrt " << n1 << " = " << ans << '\n';
-
-        calc.push(std::to_string(ans));
-      }
-
-      else {
-
-        int n1 = std::stoi(a);
-        int ans = sqrt(n1);
-        std::cout << "sqrt " << n1 << " = " << ans << '\n';
-
-        calc.push(std::to_string(ans));
-      }
-    }
-
-    //Pop
-    else if (s == "pop") {
-      calc.pop();
-    }
-
-    //Reverse stack
-    else if (s == "reverse") {
-      //std::cout << calc << '\n';
-      //print_stack(calc);
-
-      std::stack <std::string> tmpcalc;
-
-      while (!calc.empty()) {
-        tmpcalc.push(calc.top());
-        calc.pop();
-      }
-      calc = tmpcalc;
-
-      //print_stack(calc);
-      //::cout << calc << '\n';
+    else if (s != "repeat" && s != "endrepeat"){
+      calc = calculate(calc, s);
     }
 	}
 	in.close();
@@ -220,3 +75,162 @@ int main(int argc, char* argv[]) {
 //     }
 //     std::cout << "\nreversed" << '\n';
 // }
+
+std::stack <std::string> calculate (std::stack <std::string> current_stack, std::string operation) {
+  if (operation == "add" || operation == "sub" || operation == "mult" || operation == "div") {
+    std::string a, b;
+    a = current_stack.top();
+    current_stack.pop();
+    b = current_stack.top();
+    current_stack.pop();
+    std::cout << a << " " << b << " " << operation << '\n';
+
+    // //Convertings to int or doubles
+    // if (a.find('.') != std::string::npos || b.find('.') != std::string::npos) {
+    //   int n1 = std::stod(a);
+    //   int n2 = std::stod(b);
+    // }
+    // else {
+    //   int n1 = std::stoi(a);
+    //   int n2 = std::stoi(b);
+    // }
+    //std::cout << typeid(a).name() <<" "<< typeid(b).name()<< '\n';
+
+    //Caclulation
+    if (operation == "add") {
+      if (a.find('.') != std::string::npos || b.find('.') != std::string::npos) {
+          double n1 = std::stod(a);
+          double n2 = std::stod(b);
+          double ans = n1 + n2;
+
+          std::cout << n1 << " + " << n2 << " = " << ans << '\n';
+
+          current_stack.push(std::to_string(ans));
+      }
+      else if (operation == "add" ) {
+        int n1 = std::stod(a);
+        int n2 = std::stod(b);
+        int ans = n1 + n2;
+
+        std::cout << n1 << " + " << n2 << " = " << ans << '\n';
+
+        current_stack.push(std::to_string(ans));
+      }
+    }
+
+    else if (operation == "sub") {
+      if (a.find('.') != std::string::npos || b.find('.') != std::string::npos) {
+          double n1 = std::stod(a);
+          double n2 = std::stod(b);
+          double ans = n1 - n2;
+
+          std::cout << n1 << " - " << n2 << " = " << ans << '\n';
+
+          current_stack.push(std::to_string(ans));
+      }
+      else {
+        int n1 = std::stod(a);
+        int n2 = std::stod(b);
+        int ans = n1 - n2;
+
+        std::cout << n1 << " - " << n2 << " = " << ans << '\n';
+
+        current_stack.push(std::to_string(ans));
+      }
+    }
+
+    else if (operation == "mult") {
+      if (a.find('.') != std::string::npos || b.find('.') != std::string::npos) {
+          double n1 = std::stod(a);
+          double n2 = std::stod(b);
+          double ans = n1 * n2;
+
+          std::cout << n1 << " * " << n2 << " = " << ans << '\n';
+
+          current_stack.push(std::to_string(ans));
+      }
+      else {
+        int n1 = std::stod(a);
+        int n2 = std::stod(b);
+        int ans = n1 * n2;
+
+        std::cout << n1 << " * " << n2 << " = " << ans << '\n';
+
+        current_stack.push(std::to_string(ans));
+      }
+    }
+
+    else if (operation == "div") {
+      if (a.find('.') != std::string::npos || b.find('.') != std::string::npos) {
+          double n1 = std::stod(a);
+          double n2 = std::stod(b);
+          double ans = n1 / n2;
+
+          std::cout << n1 << " / " << n2 << " = " << ans << '\n';
+
+          current_stack.push(std::to_string(ans));
+      }
+      else {
+        int n1 = std::stod(a);
+        int n2 = std::stod(b);
+        int ans = n1 / n2;
+
+        std::cout << n1 << " / " << n2 << " = " << ans << '\n';
+
+        current_stack.push(std::to_string(ans));
+      }
+    }
+
+
+
+  }
+
+  else if (operation == "sqrt") {
+    std::string a;
+    a = current_stack.top();
+    current_stack.pop();
+    std::cout << a << " " << operation << '\n';
+
+    if (a.find('.') != std::string::npos) {
+
+      double n1 = std::stod(a);
+      double ans = sqrt(n1);
+      std::cout << "sqrt " << n1 << " = " << ans << '\n';
+
+      current_stack.push(std::to_string(ans));
+    }
+
+    else {
+
+      int n1 = std::stoi(a);
+      int ans = sqrt(n1);
+      std::cout << "sqrt " << n1 << " = " << ans << '\n';
+
+      current_stack.push(std::to_string(ans));
+    }
+  }
+
+  //Pop
+  else if (operation == "pop") {
+    current_stack.pop();
+  }
+
+  //Reverse stack
+  else if (operation == "reverse") {
+    //std::cout << current_stack << '\n';
+    //print_stack(current_stack);
+
+    std::stack <std::string> tmpcalc;
+
+    while (!current_stack.empty()) {
+      tmpcalc.push(current_stack.top());
+      current_stack.pop();
+    }
+    current_stack = tmpcalc;
+
+    //print_stack(current_stack);
+    //::cout << current_stack << '\n';
+  }
+
+  return current_stack;
+}
