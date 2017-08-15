@@ -125,17 +125,6 @@ std::stack <std::string> calculate (std::stack <std::string> current_stack, std:
                                     if(DEBUG)
                                     {std::cout << a << " " << b << " " << operation << '\n';}
 
-    // //Convertings to int or doubles
-    // if (a.find('.') != std::string::npos || b.find('.') != std::string::npos) {
-    //   int n1 = std::stod(a);
-    //   int n2 = std::stod(b);
-    // }
-    // else {
-    //   int n1 = std::stoi(a);
-    //   int n2 = std::stoi(b);
-    // }
-    //std::cout << typeid(a).name() <<" "<< typeid(b).name()<< '\n';
-
     //Caclulation
     if (operation == "add") {
       if (a.find('.') != std::string::npos || b.find('.') != std::string::npos) {
@@ -145,11 +134,15 @@ std::stack <std::string> calculate (std::stack <std::string> current_stack, std:
 
           std::cout << n1 << " + " << n2 << " = " << ans << '\n';
 
-          current_stack.push(std::to_string(ans));
+          //Double to string with precision(3) then push to stack
+          std::stringstream ans_stream;
+          ans_stream << std::fixed << std::setprecision(3) << ans;
+          std::string ans_str = ans_stream.str();
+          current_stack.push(ans_str);
       }
       else if (operation == "add" ) {
-        int n1 = std::stod(a);
-        int n2 = std::stod(b);
+        int n1 = std::stoi(a);
+        int n2 = std::stoi(b);
         int ans = n1 + n2;
 
         std::cout << n1 << " + " << n2 << " = " << ans << '\n';
@@ -166,11 +159,16 @@ std::stack <std::string> calculate (std::stack <std::string> current_stack, std:
 
           std::cout << n1 << " - " << n2 << " = " << ans << '\n';
 
-          current_stack.push(std::to_string(ans));
+
+          //Double to string with precision(3) then push to stack
+          std::stringstream ans_stream;
+          ans_stream << std::fixed << std::setprecision(3) << ans;
+          std::string ans_str = ans_stream.str();
+          current_stack.push(ans_str);
       }
       else {
-        int n1 = std::stod(a);
-        int n2 = std::stod(b);
+        int n1 = std::stoi(a);
+        int n2 = std::stoi(b);
         int ans = n1 - n2;
 
         std::cout << n1 << " - " << n2 << " = " << ans << '\n';
@@ -187,11 +185,16 @@ std::stack <std::string> calculate (std::stack <std::string> current_stack, std:
 
           std::cout << n1 << " * " << n2 << " = " << ans << '\n';
 
-          current_stack.push(std::to_string(ans));
+          //Double to string with precision(3) then push to stack
+          std::stringstream ans_stream;
+          ans_stream << std::fixed << std::setprecision(3) << ans;
+          std::string ans_str = ans_stream.str();
+          current_stack.push(ans_str);
+          //current_stack.push(std::to_string(ans));
       }
       else {
-        int n1 = std::stod(a);
-        int n2 = std::stod(b);
+        int n1 = std::stoi(a);
+        int n2 = std::stoi(b);
         int ans = n1 * n2;
 
         std::cout << n1 << " * " << n2 << " = " << ans << '\n';
@@ -208,11 +211,16 @@ std::stack <std::string> calculate (std::stack <std::string> current_stack, std:
 
           std::cout << n1 << " / " << n2 << " = " << ans << '\n';
 
-          current_stack.push(std::to_string(ans));
+          //Double to string with precision(3) then push to stack
+          std::stringstream ans_stream;
+          ans_stream << std::fixed << std::setprecision(3) << ans;
+          std::string ans_str = ans_stream.str();
+          current_stack.push(ans_str);
+          //current_stack.push(std::to_string(ans));
       }
       else {
-        int n1 = std::stod(a);
-        int n2 = std::stod(b);
+        int n1 = std::stoi(a);
+        int n2 = std::stoi(b);
         int ans = n1 / n2;
 
         std::cout << n1 << " / " << n2 << " = " << ans << '\n';
@@ -238,7 +246,12 @@ std::stack <std::string> calculate (std::stack <std::string> current_stack, std:
       double ans = sqrt(n1);
       std::cout << "sqrt " << n1 << " = " << ans << '\n';
 
-      current_stack.push(std::to_string(ans));
+      //Double to string with precision(3) then push to stack
+      std::stringstream ans_stream;
+      ans_stream << std::fixed << std::setprecision(3) << ans;
+      std::string ans_str = ans_stream.str();
+      current_stack.push(ans_str);
+      //current_stack.push(std::to_string(ans));
     }
 
     else {
