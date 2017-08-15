@@ -335,14 +335,14 @@ std::stack <std::string> enrepeat (std::stack <std::string> current_stack, std::
                                           std::cout << s << " = s here "<<  '\n';}
 
       if (isdigit(s[0]) && !nested_rep_mode) {
-        // if (s.find('.') != std::string::npos) {
-        //   double n = std::stod(s);
-        //   calc.push(n);
-        // }
-        // else {
-        //   int n = std::stoi(s);
-        //   calc.push(n);
-        // }
+
+        //IF s is a double then push it as string with proper precision
+        if (s.find('.') != std::string::npos) {
+          double n = std::stod(s);
+          std::stringstream s_stream;
+          s_stream << std::fixed << std::setprecision(3) << n;
+          s = s_stream.str();
+        }
         current_stack.push(s);
       }
       else if (s != "repeat" && s != "endrepeat" && !nested_rep_mode){
