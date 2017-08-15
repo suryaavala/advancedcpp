@@ -6,6 +6,9 @@
 #include <string>
 #include <stack>
 
+//include queue for reversing
+#include <queue>
+
 //include cmath for sqrt
 #include <cmath>
 
@@ -15,8 +18,12 @@
 
 //TODO Delete Typinfo after debugging
 #include <typeinfo>
-//void print_stack(std::stack<std::string> c);
+void print_stack(std::stack<std::string> c);
+void print_queue(std::queue<std::string> c);
+bool DEBUG = 0;
+
 std::stack <std::string> calculate (std::stack <std::string> current_stack, std::string operation);
+
 
 
 int main(int argc, char* argv[]) {
@@ -35,7 +42,7 @@ int main(int argc, char* argv[]) {
   //  Claculator stack
   std::stack <std::string> calc;
 
-  
+
   //TODO Stack functions
   // empty() – Returns whether the stack is empty
   // size() – Returns the size of the stack
@@ -46,9 +53,9 @@ int main(int argc, char* argv[]) {
 
 	// read the file while we have input.
 	while (in >> s) {
-
-    //TODO Delete cout
-  //  std::cout << s << isdigit(s[0])<<  '\n';
+                                        if(DEBUG)
+                                        {//TODO Delete cout
+                                        std::cout << s << " = s here "<<  '\n';}
 
     if (isdigit(s[0])) {
       // if (s.find('.') != std::string::npos) {
@@ -68,13 +75,21 @@ int main(int argc, char* argv[]) {
 	in.close();
 }
 
-// void print_stack(std::stack<std::string> c) {
-//     while (!c.empty()) {
-//         std::cout<<c.top()<<" ";
-//         c.pop();
-//     }
-//     std::cout << "\nreversed" << '\n';
-// }
+void print_stack(std::stack<std::string> c) {
+    while (!c.empty()) {
+        std::cout<<c.top()<<" ";
+        c.pop();
+    }
+    //std::cout << "\nreversed" << '\n';
+}
+
+void print_queue(std::queue<std::string> q) {
+    while (!q.empty()) {
+        std::cout<<q.front()<<" ";
+        q.pop();
+    }
+    //std::cout << "\nreversed" << '\n';
+}
 
 std::stack <std::string> calculate (std::stack <std::string> current_stack, std::string operation) {
   if (operation == "add" || operation == "sub" || operation == "mult" || operation == "div") {
@@ -217,19 +232,34 @@ std::stack <std::string> calculate (std::stack <std::string> current_stack, std:
 
   //Reverse stack
   else if (operation == "reverse") {
-    //std::cout << current_stack << '\n';
-    //print_stack(current_stack);
+                                if(DEBUG)
+                                {  std::cout << "Current Stack before reversing: " << '\n';
+                                  print_stack(current_stack);
+                                  std::cout << "/* Reversing */" << '\n';}
 
-    std::stack <std::string> tmpcalc;
 
-    while (!current_stack.empty()) {
+    int elements_reversed = std::stoi(current_stack.top());
+    current_stack.pop();
+    std::queue <std::string> tmpcalc;
+
+    while (!current_stack.empty() && elements_reversed != 0) {
       tmpcalc.push(current_stack.top());
       current_stack.pop();
+      elements_reversed -= 1;
     }
-    current_stack = tmpcalc;
+                                if (DEBUG)
+                                {//current_stack = tmpcalc;
+                                std::cout << "Temp queue while reversing: " << '\n';
+                                print_queue(tmpcalc);}
 
-    //print_stack(current_stack);
-    //::cout << current_stack << '\n';
+    while (!tmpcalc.empty()) {
+      current_stack.push(tmpcalc.front());
+      tmpcalc.pop();
+    }
+                                  if (DEBUG)
+                                  {    std::cout << "Current Stack after reversing: " << '\n';
+                                      print_stack(current_stack);
+                                      std::cout << "/* message */" << '\n';}
   }
 
   return current_stack;
