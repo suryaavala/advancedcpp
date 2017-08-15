@@ -63,15 +63,9 @@ int main(int argc, char* argv[]) {
                                         {//TODO Delete cout
                                         std::cout << s << " = s here "<<  '\n';}
 
-    if (isdigit(s[0]) && !rep_mode) {
-      // if (s.find('.') != std::string::npos) {
-      //   double n = std::stod(s);
-      //   calc.push(n);
-      // }
-      // else {
-      //   int n = std::stoi(s);
-      //   calc.push(n);
-      // }
+    //Check for if s is a digit or starts with - or starts with "."
+    if ((isdigit(s[0]) || !s.compare(0,1,"-") || !s.compare(0,1,".")) && !rep_mode) {
+
       //IF s is a double then push it as string with proper precision
       if (s.find('.') != std::string::npos) {
         double n = std::stod(s);
@@ -334,7 +328,7 @@ std::stack <std::string> enrepeat (std::stack <std::string> current_stack, std::
                                           {//TODO Delete cout
                                           std::cout << s << " = s here "<<  '\n';}
 
-      if (isdigit(s[0]) && !nested_rep_mode) {
+      if ((isdigit(s[0]) || !s.compare(0,1,"-") || !s.compare(0,1,"."))  && !nested_rep_mode) {
 
         //IF s is a double then push it as string with proper precision
         if (s.find('.') != std::string::npos) {
