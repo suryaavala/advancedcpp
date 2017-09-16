@@ -338,7 +338,7 @@ std::stack <std::string> enrepeat (std::stack <std::string> current_stack, std::
       std::string s = temp_rep_queue.front();
 
       //similar to what main has done with the inputs from the file, except here we are considering the inputs from the repeats queue as commands
-      if ((isdigit(s[0]) || !s.compare(0,1,"-") || !s.compare(0,1,"."))  && !nested_rep_mode) {
+      if ((isdigit(s[0]) || !s.compare(0,1,"-") || !s.compare(0,1,"."))  && nested_rep_mode) {
 
         //If s is a double then push it as string with proper precision
         if (s.find('.') != std::string::npos) {

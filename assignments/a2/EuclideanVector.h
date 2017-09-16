@@ -1,0 +1,7 @@
+namespace evec {
+
+  class EuclideanVector {
+
+    
+  }
+}
