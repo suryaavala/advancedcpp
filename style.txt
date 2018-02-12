@@ -1,2 +1,6 @@
 Style Rule
 1. No #define aka macros
+2. Variables should be defined close to their use
+3. Use smart pointers instead of malloc/relloc
+4. Minimise use of void*, pointer arithmetic, union and c-style casts
+5. Use cpp vectors and strings
