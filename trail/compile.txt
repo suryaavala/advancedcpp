@@ -1,1 +1,1 @@
-g++ -std=c++14 -Wall -Werror -O2 -o name name.cpp
+g++-4.9 -std=c++14 -Wall -Werror -O2 -o name name.cpp
