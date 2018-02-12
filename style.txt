@@ -1,1 +1,2 @@
 Style Rule
+1. No #define aka macros
